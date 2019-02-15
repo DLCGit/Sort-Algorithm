@@ -1,8 +1,8 @@
 
-/* ¶ÑÅÅĞòÎªÎÈ¶¨ÅÅĞò:  Ê±¼ä¸´ÔÓ¶È O( n ), ¿Õ¼ä¸´ÔÓ¶È O( 1 ) */
+/* å †æ’åºä¸ºç¨³å®šæ’åº: æ—¶é—´å¤æ‚åº¦ O( n ), ç©ºé—´å¤æ‚åº¦ O( 1 ) */
 
 /* -----------------------------------------------------------  */
-/* Ïà¹Ø½Ó¿Ú  */
+/* ç›¸å…³æ¥å£  */
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -10,7 +10,7 @@
 
 
 /* -----------------------------------------------------------  */
-/* Ïà¹ØÌØÊâºê  */
+/* ç›¸å…³ç‰¹æ®Šå®  */
 #define MAXSIZE 10
 #define RANDOMMAXSIZE 100
 
@@ -21,27 +21,29 @@ i = j; j = tmp; }
 
 
 /* -----------------------------------------------------------  */
-/* È«¾Ö  */
-/*extern*/ int heap[ MAXSIZE + 1 ] = { -1 }; /* ¶ÑÊı×é  */
+/* å…¨å±€  */
+/*extern*/ int heap[ MAXSIZE + 1 ] = { -1 }; /* å †æ•°ç»„  */
 /* -----------------------------------------------------------  */
 
 
 /* -----------------------------------------------------------  */
-/* º¯ÊıÔ­ĞÍ  */
-void createHeap( int *data/*, int *heap*/ ); /* ´´½¨¶Ñ  */
-void establishHeapTree();                    /* ½¨Á¢¶Ñ  */
-void beforeOrdering( void );                 /* ÅÅĞòÇ°Êı¾İ  */
-void isSorted( int *data );                  /* ÅÅĞòÖĞ  */
-void heapSort( int *data );                  /* ÅÅĞò¹ı³Ì */
+/* å‡½æ•°åŸå‹  */
+void CreateHeap( int *data/*, int *heap*/ );         /* åˆ›å»ºå †  */
+void EstablishHeapTree( void );                      /* å»ºç«‹å †  */
+void BeforeOrdering( void );                         /* æ’åºå‰  */
+void HeapSort( int *data );                          /* å †æ’åº  */
+void IsSorted( int *data );                          /* æ’åºå  */
 /* -----------------------------------------------------------  */
 
 
 /* -----------------------------------------------------------  */
-/* Ö÷²âÊÔ  */
-int main( int argc ,char **argv ) {
-	beforeOrdering();
-	establishHeapTree();
-	heapSort( heap );
+/* ä¸»æµ‹è¯•  */
+int main( int argc ,char **argv )
+{
+	BeforeOrdering();
+	EstablishHeapTree();
+	HeapSort( heap );
+	
 	system("pause");
 	return 0;
 }
@@ -49,8 +51,8 @@ int main( int argc ,char **argv ) {
 
 
 /* -----------------------------------------------------------  */
-/* ´´½¨¶Ñ  */
-void createHeap( int *data/*, int *heap*/ ) {
+/* åˆ›å»ºå †  */
+void CreateHeap( int *data/*, int *heap*/ ) {
 	for ( int i = 1; MAXSIZE >= i; ++i )  {
 		heap[ i ] = data[ i ];
 
@@ -69,10 +71,10 @@ void createHeap( int *data/*, int *heap*/ ) {
 
 
 /* -----------------------------------------------------------  */
-/* ½¨Á¢¶Ñ  */
-void establishHeapTree() {
-	createHeap( heap );
-	printf( "\n½¨Á¢Ê÷¶Ñ: " );
+/* å»ºç«‹å †  */
+void EstablishHeapTree() {
+	CreateHeap( heap );
+	printf( "\nå»ºç«‹æ ‘å †: " );
 	for (int i = 1; MAXSIZE >= i; ++i )
 		printf( "%d \t", heap[ i ] );
 	putchar( '\n' );
@@ -81,10 +83,10 @@ void establishHeapTree() {
 
 
 /* -----------------------------------------------------------  */
-/* ÅÅĞòÇ°Êı¾İ  */
-void beforeOrdering( void ) {
+/* æ’åºå‰  */
+void BeforeOrdering( void ) {
 	srand( ( unsigned int )time( NULL ) );
-	printf( "ÅÅĞòÇ°:   " );
+	printf( "æ’åºå‰:   " );
 	for ( int i = 1; MAXSIZE >= i; ++i ) {
 		heap[ i ] = rand() % RANDOMMAXSIZE;
 		printf( "%d \t", heap[ i ] );
@@ -94,18 +96,8 @@ void beforeOrdering( void ) {
 
 
 /* -----------------------------------------------------------  */
-/* ÅÅĞòÖĞ  */
-void isSorted( int *data ) {
-	printf( "\nÅÅĞòÖĞ: " );
-	for ( int i = MAXSIZE; 0 < i; --i )
-		printf( "%d\t", data[ i ] );
-}
-/* -----------------------------------------------------------  */
-
-
-/* -----------------------------------------------------------  */
-/* ÅÅĞò¹ı³Ì */
-void heapSort( int *data ) {
+/* å †æ’åº  */
+void HeapSort( int *data ) {
 	int m = MAXSIZE;
 	while ( 1 <= m ) {
 		swap( data[ 1 ], data[ m ] );
@@ -122,9 +114,18 @@ void heapSort( int *data ) {
 			p = s;
 			s = 2 * p;
 		}
-		isSorted( data );
+		IsSorted( data );
 	}
 	putchar( '\n' );
 }
 /* -----------------------------------------------------------  */
 
+
+/* -----------------------------------------------------------  */
+/* æ’åºå  */
+void IsSorted( int *data ) {
+	printf( "\næ’åºå: " );
+	for ( int i = MAXSIZE; 0 < i; --i )
+		printf( "%d   ", data[ i ] );
+}
+/* -----------------------------------------------------------  */
