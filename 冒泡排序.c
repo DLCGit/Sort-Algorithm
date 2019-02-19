@@ -1,17 +1,17 @@
 
-/* ц╟ещеепРн╙нх╤╗еепР: ф╫╬Ы║╒вН╩╣й╠╪Д╦╢тс╤х O( n^2 ),
- * вН╨цй╠╪Д╦╢тс╤х O( n ), ©у╪Д╦╢тс╤х O( 1 )
+/* Е├▓ФЁ║Ф▌▓Е╨▐Д╦╨Г╗ЁЕ╝ Ф▌▓Е╨▐: Е╧ЁЕ²┤Ц─│Ф°─Е²▐Ф≈╤И≈╢Е╓█Ф²┌Е╨╕ O( n^2 ),
+ * Ф°─Е╔╫Ф≈╤И≈╢Е╓█Ф²┌Е╨╕ O( n ), Г╘╨И≈╢Е╓█Ф²┌Е╨╕ O( 1 )
  */
 
 /* -----------------------------------------------------------  */
-/* оЮ╧ь╫с©з  */
+/* Г⌡╦Е┘ЁФ▌╔Е▐ё  */
 #include <stdio.h>
 #include <stdlib.h>
 /* -----------------------------------------------------------  */
 
 
 /* -----------------------------------------------------------  */
-/* оЮ╧ьльйБ╨Й  */
+/* Г⌡╦Е┘ЁГ┴╧Ф╝┼Е╝▐  */
 #define MAXSIZE 6
 
 #define swap( arr, j, i ) { \
@@ -21,25 +21,26 @@ arr[ i ] = arr[ j ]; arr[ j ] = tmp; }
 
 
 /* -----------------------------------------------------------  */
-/* х╚╬ж  */
+/* Е┘╗Е╠─  */
 int arr[ MAXSIZE ] = { 5, 2, 6, 54, 2, 65 };
 /* -----------------------------------------------------------  */
 
 
 /* -----------------------------------------------------------  */
-/* ╨╞йЩт╜пм  */
-void BeforeOrdering( int *arr, int n );            /* еепРг╟    */
-void BubbleSort( int *arr, int n );                /* ц╟ещеепР  */
-void AfterOrdering( int *arr, int n );             /* еепР╨С    */
+/* Е┤╫Ф∙╟Е▌÷Е·▀  */
+void BeforeOrdering( int *arr, int n );            /* Ф▌▓Е╨▐Е┴█    */
+void BubbleSort( int *arr, int n );                /* Е├▓ФЁ║Ф▌▓Е╨▐  */
+void AfterOrdering( int *arr, int n );             /* Ф▌▓Е╨▐Е░▌    */
 /* -----------------------------------------------------------  */
 
 
 /* -----------------------------------------------------------  */
-/* жВ╡Бйт  */
-int main( int argc, char **argv ) {
-	BeforeOrdering( arr, sizeof( arr ) / sizeof( int ) );
-	BubbleSort( arr, sizeof( arr ) / sizeof( int ) );
-	AfterOrdering( arr, sizeof( arr ) / sizeof( int ) );
+/* Д╦╩Ф╣▀Х╞∙  */
+int main( int argc, char **argv ) 
+{
+    BeforeOrdering( arr, sizeof( arr ) / sizeof( int ) );
+    BubbleSort( arr, sizeof( arr ) / sizeof( int ) );
+    AfterOrdering( arr, sizeof( arr ) / sizeof( int ) );
     
     system("pause");
     return 0;
@@ -48,9 +49,9 @@ int main( int argc, char **argv ) {
 
 
 /* -----------------------------------------------------------  */
-/* еепРг╟  */
+/* Ф▌▓Е╨▐Е┴█  */
 void BeforeOrdering( int *arr, int n ) {
-	printf( "еепРг╟: " );
+    printf( "Ф▌▓Е╨▐Е┴█: " );
     for ( int i = 0; n > i; ++i )
         printf( "%d ", arr[ i ] );
     putchar( '\n' );
@@ -59,25 +60,25 @@ void BeforeOrdering( int *arr, int n ) {
 
 
 /* -----------------------------------------------------------  */
-/* ц╟ещеепР  */
+/* Е├▓ФЁ║Ф▌▓Е╨▐  */
 void BubbleSort( int *arr, int n ) {
-	for ( int i = 0; n > i; ++i ) {
-		int k = i;
-		for ( int j = i + 1; n > j; ++j ) {
-			if ( arr[ k ] > arr[ j ] )
-				swap( arr, k, j );
-			if ( !k )
-				break;
-		}
+    for ( int i = 0; n > i; ++i ) {
+	int k = i;
+	for ( int j = i + 1; n > j; ++j ) {
+	    if ( arr[ k ] > arr[ j ] )
+		swap( arr, k, j );
+	    if ( !k )
+		break;
 	}
+    }
 }
 /* -----------------------------------------------------------  */
 
 
 /* -----------------------------------------------------------  */
-/* еепР╨С  */
+/* Ф▌▓Е╨▐Е░▌  */
 void AfterOrdering( int *arr, int n ) {
-	printf( "еепР╨С: " );
+    printf( "Ф▌▓Е╨▐Е░▌: " );
     for ( int i = 0; n > i; ++i )
         printf( "%d ", arr[ i ] );
     putchar( '\n' );
