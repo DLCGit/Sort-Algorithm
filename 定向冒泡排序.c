@@ -1,17 +1,17 @@
 
-/* ¶¨ÏòÃ°ÅİÅÅĞòÎªÎÈ¶¨ÅÅĞò: Æ½¾ù¡¢×î»µÊ±¼ä¸´ÔÓ¶È O( n^2 ),
- * ×îºÃÊ±¼ä¸´ÔÓ¶È O( n ), ¿Õ¼ä¸´ÔÓ¶È O( 1 )
+/* å®šå‘å†’æ³¡æ’åºä¸ºç¨³å®šæ’åº: å¹³å‡ã€æœ€åæ—¶é—´å¤æ‚åº¦ O( n^2 ),
+ * æœ€å¥½æ—¶é—´å¤æ‚åº¦ O( n ), ç©ºé—´å¤æ‚åº¦ O( 1 )
  */
  
 /* -----------------------------------------------------------  */
-/* Ïà¹Ø½Ó¿Ú  */
+/* ç›¸å…³æ¥å£  */
 #include <stdio.h>
 #include <stdlib.h>
 /* -----------------------------------------------------------  */
 
 
 /* -----------------------------------------------------------  */
-/* Ïà¹ØÌØÊâºê  */
+/* ç›¸å…³ç‰¹æ®Šå®  */
 #define MAXSIZE 10
 
 #define swap( arr, j, i ) { \
@@ -21,23 +21,23 @@ arr[ i ] = arr[ j ]; arr[ j ] = tmp; }
 
 
 /* -----------------------------------------------------------  */
-/* È«¾Ö  */
+/* å…¨å±€  */
 int arr[ MAXSIZE ] = { 8, 5, 2, 6, 9, 3, 1, 4, 0, 7 };
 /* -----------------------------------------------------------  */
 
 
 /* -----------------------------------------------------------  */
-/* º¯ÊıÔ­ĞÍ  */
-void BeforeOrdering( int *arr, int n );        /* ÅÅĞòÇ°        */
-void DirectedBubbleSort(int *arr, int n);      /* ¶¨ÏòÃ°ÅİÅÅĞò  */
-void AfterOrdering( int *arr, int n );         /* ÅÅĞòºó        */
+/* å‡½æ•°åŸå‹  */
+void BeforeOrdering( int *arr, int n );        /* æ’åºå‰        */
+void DirectedBubbleSort(int *arr, int n);      /* å®šå‘å†’æ³¡æ’åº  */
+void AfterOrdering( int *arr, int n );         /* æ’åºå        */
 /* -----------------------------------------------------------  */
 
 
 /* -----------------------------------------------------------  */
-/* Ö÷²âÊÔ  */
+/* ä¸»æµ‹è¯•  */
 int main( int argc, char **argv ) {
-	BeforeOrdering( arr, sizeof( arr ) / sizeof( int ) );
+    BeforeOrdering( arr, sizeof( arr ) / sizeof( int ) );
     DirectedBubbleSort( arr, sizeof( arr ) / sizeof( int ) );
     AfterOrdering( arr, sizeof( arr ) / sizeof( int ) );
     
@@ -48,9 +48,9 @@ int main( int argc, char **argv ) {
 
 
 /* -----------------------------------------------------------  */
-/* ÅÅĞòÇ°  */
+/* æ’åºå‰  */
 void BeforeOrdering( int *arr, int n ) {
-	printf( "ÅÅĞòÇ°: " );
+    printf( "æ’åºå‰: " );
     for ( int i = 0; n > i; ++i )
         printf( "%d ", arr[ i ] );
     putchar( '\n' );
@@ -59,20 +59,20 @@ void BeforeOrdering( int *arr, int n ) {
 
 
 /* -----------------------------------------------------------  */
-/* ¶¨ÏòÃ°ÅİÅÅĞò  */
+/* å®šå‘å†’æ³¡æ’åº  */
 void DirectedBubbleSort( int *arr, int n ) {
     int i = 0, left  = 0, right = n - 1;
     while ( left <= right ) {
-		/* ×ó±ßÒ»°ë, ½«×î´óÔªËØ·Åµ½ºóÃæ  */
+	/* å·¦è¾¹ä¸€åŠ, å°†æœ€å¤§å…ƒç´ æ”¾åˆ°åé¢  */
         for ( i = left; right > i; ++i )
             if ( arr[ i + 1 ] < arr[ i ] )
-				swap( arr, i, i + 1 );
+		swap( arr, i, i + 1 );
         right--;
 
-        /* ÓÒ±ßÒ»°ë, ½«×îĞ¡ÔªËØ·Åµ½Ç°Ãæ */
+        /* å³è¾¹ä¸€åŠ, å°†æœ€å°å…ƒç´ æ”¾åˆ°å‰é¢ */
         for ( i = right; left < i; --i )
             if ( arr[ i - 1 ] > arr[ i ] )
-				swap( arr, i - 1, i );
+		swap( arr, i - 1, i );
         left++;
     }
 }
@@ -80,9 +80,9 @@ void DirectedBubbleSort( int *arr, int n ) {
 
 
 /* -----------------------------------------------------------  */
-/* ÅÅĞòºó  */
+/* æ’åºå  */
 void AfterOrdering( int *arr, int n ) {
-	printf( "ÅÅĞòºó: " );
+    printf( "æ’åºå: " );
     for ( int i = 0; n > i; ++i )
         printf( "%d ", arr[ i ] );
     putchar( '\n' );
