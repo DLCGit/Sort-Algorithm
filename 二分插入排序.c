@@ -31,7 +31,8 @@ void AfterOrdering( int *arr, int n );            /* 排序后         */
 
 /* ---------------------------------------------------------------  */
 /* 主测试  */
-int main( int argc, char **argv ) {
+int main( int argc, char **argv ) 
+{
     BeforeOrdering( arr, sizeof( arr ) / sizeof( int ) );
     DichotomySort( arr, sizeof( arr ) / sizeof( int ) );
     AfterOrdering( arr, sizeof( arr ) / sizeof( int ) );
