@@ -32,7 +32,7 @@ void AfterOrdering( int *arr, int n );            /* 排序后         */
 /* ---------------------------------------------------------------  */
 /* 主测试  */
 int main( int argc, char **argv ) {
-	BeforeOrdering( arr, sizeof( arr ) / sizeof( int ) );
+    BeforeOrdering( arr, sizeof( arr ) / sizeof( int ) );
     DichotomySort( arr, sizeof( arr ) / sizeof( int ) );
     AfterOrdering( arr, sizeof( arr ) / sizeof( int ) );
     
@@ -45,7 +45,7 @@ int main( int argc, char **argv ) {
 /* ---------------------------------------------------------------  */
 /* 排序前  */
 void BeforeOrdering(int *arr, int n) {
-	printf( "排序前: " );
+    printf( "排序前: " );
     for ( int i = 0; n > i; ++i )
         printf( "%d ", arr[ i ] );
     putchar( '\n' );
@@ -56,7 +56,7 @@ void BeforeOrdering(int *arr, int n) {
 /* ---------------------------------------------------------------  */
 /* 二分插入排序  */
 void DichotomySort( int *arr, int n ) {
-	/* 右手抓到一张扑克牌, 拿在左手上的牌总是排序好的, 所以用二分法, 手牌左右边界进行初始化  */
+    /* 右手抓到一张扑克牌, 拿在左手上的牌总是排序好的, 所以用二分法, 手牌左右边界进行初始化  */
     for ( int i = 1; n > i; ++i ) {
         int get = arr[ i ], left = 0, right = i - 1;
         /* 采用二分法定位新牌位置  */
@@ -79,10 +79,9 @@ void DichotomySort( int *arr, int n ) {
 /* ---------------------------------------------------------------  */
 /* 排序后  */
 void AfterOrdering(int *arr, int n) {
-	printf( "排序后: " );
+    printf( "排序后: " );
     for ( int i = 0; n > i; ++i )
         printf( "%d ", arr[ i ] );
     putchar( '\n' );
 }
 /* ---------------------------------------------------------------  */
-
