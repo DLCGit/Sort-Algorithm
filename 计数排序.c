@@ -52,12 +52,12 @@ void After_Ordering( int *arr, int n );               /* 数组排序后        
 /* 主测试  */
 int main( int argc, char **argv )
 {
-	Before_Ordering( arr, MAXSIZE );
-	Count_Sort( arr, brr, crr, MAXSIZE, MAXSIZE - 1 );
-	After_Ordering( brr, MAXSIZE );
+    Before_Ordering( arr, MAXSIZE );
+    Count_Sort( arr, brr, crr, MAXSIZE, MAXSIZE - 1 );
+    After_Ordering( brr, MAXSIZE );
 	
-	system("pause");
-	return 0;
+    system("pause");
+    return 0;
 }
 /* -----------------------------------------------------------------------------------------------------------------  */
 
@@ -70,19 +70,19 @@ int main( int argc, char **argv )
  * len（ 数组长度 ）
  */
 void Count_Sort( int *arr, int *brr, int *crr, int len, int n ) {
-	for ( int i = 0; n >= i; ++i )  /* 将 crr数组 初始化为 0  */
-		crr[ i ] = 0;
+    for ( int i = 0; n >= i; ++i )  /* 将 crr数组 初始化为 0  */
+	crr[ i ] = 0;
 
-	for ( int i = 0; len > i; ++i ) /* 统计 arr数组 中每个元素重复出现的个数  */
-		++crr[ arr[ i ] ];
+    for ( int i = 0; len > i; ++i ) /* 统计 arr数组 中每个元素重复出现的个数  */
+	++crr[ arr[ i ] ];
 
-	for ( int i = 1; n >= i; ++i )  /* 求 crr数组 中 <= i 的元素个数  */
-		crr[ i ] += crr[ i - 1 ];
+    for ( int i = 1; n >= i; ++i )  /* 求 crr数组 中 <= i 的元素个数  */
+	crr[ i ] += crr[ i - 1 ];
 
-	for ( int i = len - 1; i >= 0; --i ) {     /* 将 arr 中元素放到 brr 中对应位置上  */
-		brr[ crr[ arr[ i ] ] - 1 ] = arr[ i ];
-		--crr[ arr[ i ] ];                     /* 如果有相同的元素, 则放在下一个位置  */
-	}
+    for ( int i = len - 1; i >= 0; --i ) {     /* 将 arr 中元素放到 brr 中对应位置上  */
+	brr[ crr[ arr[ i ] ] - 1 ] = arr[ i ];
+	--crr[ arr[ i ] ];                     /* 如果有相同的元素, 则放在下一个位置  */
+    }
 }
 /* -----------------------------------------------------------------------------------------------------------------  */
 
@@ -94,17 +94,17 @@ void Count_Sort( int *arr, int *brr, int *crr, int len, int n ) {
  * len（ 数组长度 ）
  */
 void Count_Sort( int *arr, int *crr, int len, int n ) {
-	for ( int i = 0; n >= i; ++i )  /* 将 crr数组 初始化为 0  */
-		crr[ i ] = 0;
+    for ( int i = 0; n >= i; ++i )  /* 将 crr数组 初始化为 0  */
+	crr[ i ] = 0;
 
-	for ( int i = 0; len > i; ++i ) /* 统计 arr数组 中每个元素重复出现的个数  */
-		++crr[ arr[ i ] ];
+    for ( int i = 0; len > i; ++i ) /* 统计 arr数组 中每个元素重复出现的个数  */
+	++crr[ arr[ i ] ];
 
-	/* 根据 crr[ i ]大小, 将元素 i 放入 arr 适当的位置  */
-	int iCount = 0;
-	for ( int i = 0; n >= i; ++i )
-		while ( 0 < ( crr[ i ]-- ) )
-			arr[ ++iCount ] = i;
+    /* 根据 crr[ i ]大小, 将元素 i 放入 arr 适当的位置  */
+    int iCount = 0;
+    for ( int i = 0; n >= i; ++i )
+	while ( 0 < ( crr[ i ]-- ) )
+	    arr[ ++iCount ] = i;
 }
 /* -----------------------------------------------------------------------------------------------------------------  */
 
@@ -112,10 +112,10 @@ void Count_Sort( int *arr, int *crr, int len, int n ) {
 /* -----------------------------------------------------------------------------------------------------------------  */
 /* 数组排序前  */
 void Before_Ordering( int *arr, int n ) {
-	printf( "排序前: " );
-	for ( int i = 0; MAXSIZE > i; ++i )
-		printf( "%d ", arr[ i ] );
-	putchar( '\n' );
+    printf( "排序前: " );
+    for ( int i = 0; MAXSIZE > i; ++i )
+	printf( "%d ", arr[ i ] );
+    putchar( '\n' );
 }
 /* -----------------------------------------------------------------------------------------------------------------  */
 
@@ -123,9 +123,9 @@ void Before_Ordering( int *arr, int n ) {
 /* -----------------------------------------------------------------------------------------------------------------  */
 /* 数组排序后  */
 void After_Ordering( int *brr, int n ) {
-	printf( "排序后: " );
-	for ( int i = 0; MAXSIZE > i; ++i )
-		printf( "%d ", brr[ i ] );
-	putchar( '\n' );
+    printf( "排序后: " );
+    for ( int i = 0; MAXSIZE > i; ++i )
+	printf( "%d ", brr[ i ] );
+    putchar( '\n' );
 }
 /* -----------------------------------------------------------------------------------------------------------------  */
