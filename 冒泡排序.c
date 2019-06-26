@@ -1,87 +1,41 @@
-
 /* 冒泡排序为稳定排序: 平均、最坏时间复杂度 O( n^2 ),
  * 最好时间复杂度 O( n ), 空间复杂度 O( 1 )
  */
 
-/* -----------------------------------------------------------  */
-/* 相关接口  */
 #include <stdio.h>
 #include <stdlib.h>
-/* -----------------------------------------------------------  */
+#include <time.h>
+#define MAXN 10
+#define swap(arr, j, i) { int tmp = 0; tmp = arr[ i ]; arr[ i ] = arr[ j ]; arr[ j ] = tmp; }
 
+void destroy(int *base) { free(base); }
+int *init(int size, int left, int right) {
+	int i, *base = (int *)malloc(size * sizeof(int)); 
+	srand(time(NULL));
+	for (i = 0; i < size; ++i) base[ i ] = rand( ) % (right - left + 1) + left;
+	return base;
+}
 
-/* -----------------------------------------------------------  */
-/* 相关特殊宏  */
-#define MAXSIZE 6
+void print(int *base, int size) {
+    int i;
+    for (i = 0; i < size; printf("%d ", base[ i++ ]));  
+    printf("\n");
+}
 
-#define swap( arr, j, i ) { \
-int tmp = 0; tmp = arr[ i ]; \
-arr[ i ] = arr[ j ]; arr[ j ] = tmp; }
-/* -----------------------------------------------------------  */
+void ordering(int *base, int size) {
+	int i, j, get;
+    for (i = 0; i < size; get = i, ++i) 
+		for (j = i + 1; j < size; j++) {
+			if (base[ get ] > base[ j ]) swap(base, get, j);
+			if (!get) break;
+		}
+}
 
-
-/* -----------------------------------------------------------  */
-/* 全局  */
-int arr[ MAXSIZE ] = { 5, 2, 6, 54, 2, 65 };
-/* -----------------------------------------------------------  */
-
-
-/* -----------------------------------------------------------  */
-/* 函数原型  */
-void BeforeOrdering( int *arr, int n );            /* 排序前    */
-void BubbleSort( int *arr, int n );                /* 冒泡排序  */
-void AfterOrdering( int *arr, int n );             /* 排序后    */
-/* -----------------------------------------------------------  */
-
-
-/* -----------------------------------------------------------  */
-/* 主测试  */
-int main( int argc, char **argv ) 
-{
-    BeforeOrdering( arr, sizeof( arr ) / sizeof( int ) );
-    BubbleSort( arr, sizeof( arr ) / sizeof( int ) );
-    AfterOrdering( arr, sizeof( arr ) / sizeof( int ) );
-    
-    system("pause");
+int main( ) {
+	int *gather = init(MAXN, 1, MAXN);
+    print(gather, MAXN);
+    ordering(gather, MAXN);
+    print(gather, MAXN);
+    destroy(gather);
     return 0;
 }
-/* -----------------------------------------------------------  */
-
-
-/* -----------------------------------------------------------  */
-/* 排序前  */
-void BeforeOrdering( int *arr, int n ) {
-    printf( "排序前: " );
-    for ( int i = 0; n > i; ++i )
-        printf( "%d ", arr[ i ] );
-    putchar( '\n' );
-}
-/* -----------------------------------------------------------  */
-
-
-/* -----------------------------------------------------------  */
-/* 冒泡排序  */
-void BubbleSort( int *arr, int n ) {
-    for ( int i = 0; n > i; ++i ) {
-	int k = i;
-	for ( int j = i + 1; n > j; ++j ) {
-	    if ( arr[ k ] > arr[ j ] )
-		swap( arr, k, j );
-	    if ( !k )
-		break;
-	}
-    }
-}
-/* -----------------------------------------------------------  */
-
-
-/* -----------------------------------------------------------  */
-/* 排序后  */
-void AfterOrdering( int *arr, int n ) {
-    printf( "排序后: " );
-    for ( int i = 0; n > i; ++i )
-        printf( "%d ", arr[ i ] );
-    putchar( '\n' );
-}
-/* -----------------------------------------------------------  */
-
