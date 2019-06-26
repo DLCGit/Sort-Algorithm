@@ -1,111 +1,50 @@
-
 /* 快速排序为不稳定排序: 平均、最好时间复杂度 O( n ),
  * 最坏时间复杂度 O( n^2 ), 空间复杂度 O( n )
  */
-
-/* -----------------------------------------------------------  */
-/* 相关接口  */
+ 
 #include <stdio.h>
 #include <stdlib.h>
-/* -----------------------------------------------------------  */
+#include <time.h>
+#define MAXN 10
+//#define swap(base, j, i) { int tmp = 0; tmp = base[ i ]; base[ i ] = base[ j ]; base[ j ] = tmp; }
 
+void swap(int *base, int j, int i) { int tmp = 0; tmp = base[ i ], base[ i ] = base[ j ], base[ j ] = tmp; }
+void destroy(int *base) { free(base); }
+int *init(int size, int left, int right) {
+	int i, *base = (int *)malloc(size * sizeof(int)); 
+	srand(time(NULL));
+	for (i = 0; i < size; ++i) base[ i ] = rand( ) % (right - left + 1) + left;
+	return base;
+}
 
-/* -----------------------------------------------------------  */
-/* 相关特殊宏  */
-#define MAXSIZE 10
+void print(int *base, int size) {
+    int i;
+    for (i = 0; i < size; printf("%d ", base[ i++ ]));  
+    printf("\n");
+}
 
-#if 0
-// 注释
-	#define swap( arr, i, j ) { \
-	int tmp = 0; tmp = arr[ i ]; \
-	arr[ i ] = arr[ j ]; arr[ j ] = tmp; }
-#endif
-/* -----------------------------------------------------------  */
+int part(int *base, int left, int right) {
+    int pivot = base[ right ];         /* 将最后一个元素作为基准, 也就是二分之一  */
+    int tail  = left - 1, i;           /* 小于基准的子数组最后一个元素的索引, 即 -1  */
+    for (i = left; i < right; ++i)     /* 从左往右遍历基准以外其它元素  */
+        if (base[ i ] <= pivot)        /* 将小于等于基准元素放到前一个子数组末尾, 小于等于稳定  */
+            swap(base, ++tail, i);     /* 先执行 ++ 防止 tail 索引越界  */
+    swap(base, tail + 1, right);       /* 最后将基准放到前一个子数组后边, 剩下子数组即为大于基准子数组  */
+    return tail + 1;                   /* 返回基准索引  */
+}
 
+void ordering(int *base, int left, int right) {
+    if (left >= right) return ;
+    int pivot_Index = part(base, left, right); /* 基准索引  */
+    ordering(base, left, pivot_Index - 1);     /* 左边一半  */
+    ordering(base, pivot_Index + 1, right);    /* 右边一半  */
+}
 
-/* -----------------------------------------------------------  */
-/* 全局  */
-int arr[ MAXSIZE ]    = { 8, 5, 2, 6, 9, 3, 1, 4, 0, 7 };
-/* -----------------------------------------------------------  */
-
-
-/* -----------------------------------------------------------  */
-/* 函数原型  */
-void swap( int *arr, int j, int i );               /* 交换      */
-void BeforeOrdering( int *arr, int n );            /* 排序前    */
-int  Partition( int *arr, int left, int right );   /* 分割元素  */
-void QuickSort( int *arr, int left, int right );   /* 快速排序  */
-void AfterOrdering( int *arr, int n );             /* 排序后    */
-/* -----------------------------------------------------------  */
-
-
-/* -----------------------------------------------------------------------------------------------------  */
-/* 主测试  */
-int main( int argc, char **argv )
-{
-    BeforeOrdering( arr, sizeof( arr ) / sizeof( int ) );
-    QuickSort( arr, 0, sizeof( arr ) / sizeof( int ) - 1 );
-    AfterOrdering( arr, sizeof( arr ) / sizeof( int ) );
-
-    system("pause");
+int main( ) {
+	int *gather = init(MAXN, 1, MAXN);
+	print(gather, MAXN);
+    ordering(gather, 0, MAXN - 1);
+    print(gather, MAXN);
+    destroy(gather);
     return 0;
 }
-/* -----------------------------------------------------------------------------------------------------  */
-
-
-/* -----------------------------------------------------------------------------------------------------  */
-/* 交换 */
-void swap( int *arr, int j, int i ) {
-    int tmp   = arr[ i ];
-    arr[ i ]  = arr[ j ];
-    arr[ j ]  = tmp;
-}
-/* -----------------------------------------------------------------------------------------------------  */
-
-
-/* -----------------------------------------------------------------------------------------------------  */
-/* 排序前  */
-void BeforeOrdering( int *arr, int n ) {
-    printf( "排序前: " );
-    for ( int i = 0; n > i; ++i )
-        printf( "%d ", arr[ i ] );
-    putchar( '\n' );
-}
-/* -----------------------------------------------------------------------------------------------------  */
-
-
-/* -----------------------------------------------------------------------------------------------------  */
-/* 分割元素  */
-int Partition( int *arr, int left, int right ) {
-    int pivot = arr[ right ];            /* 将最后一个元素作为基准, 也就是二分之一  */
-    int tail  = left - 1;                /* 小于基准的子数组最后一个元素的索引, 即 -1  */
-    for ( int i = left; right > i; ++i ) /* 从左往右遍历基准以外其它元素  */
-        if ( arr[ i ] <= pivot )         /* 将小于等于基准元素放到前一个子数组末尾, 小于等于稳定  */
-            swap( arr, ++tail, i );      /* 先执行 ++ 防止 tail 索引越界  */
-    swap( arr, tail + 1, right );        /* 最后将基准放到前一个子数组后边, 剩下子数组即为大于基准子数组  */
-    return tail + 1;                     /* 返回基准索引  */
-}
-/* -----------------------------------------------------------------------------------------------------  */
-
-
-/* -----------------------------------------------------------------------------------------------------  */
-/* 快速排序  */
-void QuickSort( int *arr, int left, int right ) {
-    if ( left >= right )
-    	return ;
-    int pivot_Index = Partition( arr, left, right ); /* 基准索引  */
-    QuickSort( arr, left, pivot_Index - 1 );         /* 左边一半  */
-    QuickSort( arr, pivot_Index + 1, right );        /* 右边一半  */
-}
-/* -----------------------------------------------------------------------------------------------------  */
-
-/* -----------------------------------------------------------------------------------------------------  */
-/* 排序后  */
-void AfterOrdering( int *arr, int n ) {
-    printf( "排序后: " );
-    for ( int i = 0; n > i; ++i )
-        printf( "%d ", arr[ i ] );
-    putchar( '\n' );
-}
-/* -----------------------------------------------------------------------------------------------------  */
-
