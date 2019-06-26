@@ -1,88 +1,45 @@
-
 /* 二分插入排序为不稳定排序: 平均、最坏时间复杂度 O( n^2 ),
  * 最好时间复杂度 O( n ), 空间复杂度 O( 1 )
 */
 
-/* ---------------------------------------------------------------  */
-/* 相关接口  */
 #include <stdio.h>
 #include <stdlib.h>
-/* ---------------------------------------------------------------  */
+#include <time.h>
+#define MAXN 10
 
-
-/* ---------------------------------------------------------------  */
-/* 相关特殊宏  */
-#define MAXSIZE 10
-/* ---------------------------------------------------------------  */
-
-/* ---------------------------------------------------------------  */
-/* 全局  */
-int arr[ MAXSIZE ] = { 8, 5, 2, 6, 9, 3, 1, 4, 0, 7 };
-/* ---------------------------------------------------------------  */
-
-
-/* ---------------------------------------------------------------  */
-/* 函数原型  */
-void BeforeOrdering( int *arr, int n );           /* 排序前         */
-void DichotomySort( int *arr, int n );            /* 二分插入排序   */
-void AfterOrdering( int *arr, int n );            /* 排序后         */
-/* ---------------------------------------------------------------  */
-
-
-/* ---------------------------------------------------------------  */
-/* 主测试  */
-int main( int argc, char **argv ) 
-{
-    BeforeOrdering( arr, sizeof( arr ) / sizeof( int ) );
-    DichotomySort( arr, sizeof( arr ) / sizeof( int ) );
-    AfterOrdering( arr, sizeof( arr ) / sizeof( int ) );
-    
-    system("pause");
-    return 0;
+void destroy(int *base) { free(base); }
+int *init(int size, int left, int right) {
+	int i, *base = (int *)malloc(size * sizeof(int)); 
+	srand(time(NULL));
+	for (i = 0; i < size; ++i) base[ i ] = rand( ) % (right - left + 1) + left;
+	return base;
 }
-/* ---------------------------------------------------------------  */
 
-
-/* ---------------------------------------------------------------  */
-/* 排序前  */
-void BeforeOrdering(int *arr, int n) {
-    printf( "排序前: " );
-    for ( int i = 0; n > i; ++i )
-        printf( "%d ", arr[ i ] );
-    putchar( '\n' );
+void print(int *base, int size) {
+    int i;
+    for (i = 0; i < size; printf("%d ", base[ i++ ]));  
+    printf("\n");
 }
-/* ---------------------------------------------------------------  */
 
-
-/* ---------------------------------------------------------------  */
-/* 二分插入排序  */
-void DichotomySort( int *arr, int n ) {
-    /* 右手抓到一张扑克牌, 拿在左手上的牌总是排序好的, 所以用二分法, 手牌左右边界进行初始化  */
-    for ( int i = 1; n > i; ++i ) {
-        int get = arr[ i ], left = 0, right = i - 1;
-        /* 采用二分法定位新牌位置  */
-        while ( right >= left ) {
-            int mid = ( left + right ) / 2; /* 分成一办 */
-            /* 如果取到的牌小于中间的牌, 那么取到的这张牌放到左边 Mid - 1 的位置  */
-            if ( get < arr[ mid ] )
-            	right = mid - 1;
-            else/* 放到右边 Mid + 1 的位置  */
-            	left  = mid + 1;
+void ordering( int *base, int n ) {
+	int i, j;
+    for (i = 1; n > i; ++i) {
+        int get = base[ i ], left = 0, right = i - 1;
+        while (right >= left) {
+            int mid = (left + right) / 2; 
+            if (get < base[ mid ]) right = mid - 1;
+            else left  = mid + 1;
         }
-        for ( int j = i - 1; left <= j; --j )
-            arr[ j + 1 ] = arr[ j ];
-        arr[ left ] = get; /* 将抓到的牌插入手上拿着的牌  */
+        for (j = i - 1; left <= j; --j) base[ j + 1 ] = base[ j ];
+        base[ left ] = get; 
     }
 }
-/* ---------------------------------------------------------------  */
 
-
-/* ---------------------------------------------------------------  */
-/* 排序后  */
-void AfterOrdering(int *arr, int n) {
-    printf( "排序后: " );
-    for ( int i = 0; n > i; ++i )
-        printf( "%d ", arr[ i ] );
-    putchar( '\n' );
+int main( ) {
+	int *gather = init(MAXN, 1, MAXN);
+    print(gather, MAXN);
+    ordering(gather, MAXN);
+    print(gather, MAXN);
+    destroy(gather);
+    return 0;
 }
-/* ---------------------------------------------------------------  */
