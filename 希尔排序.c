@@ -1,88 +1,46 @@
-
 /* 希尔排序为不稳定排序: 平均、最好时间复杂度 O( n ), 最坏时间复杂度 O( n^2 )
  * 空间复杂度 O( 1 )
 */
 
-/* -----------------------------------------------------------  */
-/* 相关接口  */
 #include <stdio.h>
 #include <stdlib.h>
-/* -----------------------------------------------------------  */
+#include <time.h>
+#define MAXN 10
+#define swap(arr, j, i) { int tmp = 0; tmp = arr[ i ]; arr[ i ] = arr[ j ]; arr[ j ] = tmp; }
 
-
-/* -----------------------------------------------------------  */
-/* 全局  */
-int arr[] = { 8, 5, 2, 6, 9, 3, 1, 4, 0, 7 };
-/* -----------------------------------------------------------  */
-
-
-/* -----------------------------------------------------------  */
-/* 函数原型  */
-void BeforeOrdering( int *arr, int n );            /* 排序前    */
-void ShellSort( int *arr, int n );                 /* 希尔排序  */
-void AfterOrdering( int *arr, int n );             /* 排序后    */
-/* -----------------------------------------------------------  */
-
-
-/* -----------------------------------------------------------  */
-/* 主测试  */
-int main( int argc, char **argv ) 
-{
-    BeforeOrdering( arr, sizeof( arr ) / sizeof( int ) );
-    ShellSort( arr, sizeof( arr ) / sizeof( int ) );
-    AfterOrdering( arr, sizeof( arr ) / sizeof( int ) );
-
-    system("pause");
-    return 0;
+void destroy(int *base) { free(base); }
+int *init(int size, int left, int right) {
+	int i, *base = (int *)malloc(size * sizeof(int)); 
+	srand(time(NULL));
+	for (i = 0; i < size; ++i) base[ i ] = rand( ) % (right - left + 1) + left;
+	return base;
 }
-/* -----------------------------------------------------------  */
 
-
-/* -----------------------------------------------------------  */
-/* 排序前  */
-void BeforeOrdering( int *arr, int n ) {
-    printf( "排序前: " );
-    for ( int i = 0; n > i; ++i )
-        printf( "%d ", arr[ i ] );
-    putchar( '\n' );
+void print(int *base, int size) {
+    int i;
+    for (i = 0; i < size; printf("%d ", base[ i++ ]));  
+    printf("\n");
 }
-/* -----------------------------------------------------------  */
 
-
-/* -----------------------------------------------------------  */
-/* 希尔排序  */
-void ShellSort( int *arr, int n ) {
-    /* 每次增量 3  */
-    int ntmp = 0;
-    while ( n >= ntmp )
-        ntmp = 3 *  1 + ntmp;
-
-    /* 缺少等于稳定性不高, 容易混乱  */
-    while ( 1 <= ntmp ) {
-        for ( int i = ntmp; n > i; ++i ) {
-            int j   = i - ntmp;
-            int get = arr[ i ];
-
-            /* 判断元素是否大于之后元素  */
-            while ( ( 0 <= j ) and ( get < arr[ j ] ) ) {
-                arr[ j + ntmp ] = arr[ j ];
-                j -= ntmp;
-            }
-            arr[ j + ntmp ] = get;
+void ordering(int *base, int size) {
+    int k, i;
+    for (k = 0; k <= size; k += 5);
+    while (k >= 1) {
+        for (i = k; i < size; ++i) {
+            int j = i - k, get = base[ i ];
+            while (j >= 0 && get < base[ j ]) 
+				base[ j + k ] = base[ j ], j -= k;
+            base[ j + k ] = get;
         }
-        ntmp = ( ntmp - 1 ) / 3; /* 递减增量  */
+        k = (k - 1) / 3; 
     }
 }
-/* -----------------------------------------------------------  */
 
-
-/* -----------------------------------------------------------  */
-/* 排序后  */
-void AfterOrdering( int *arr, int n ) {
-    printf( "排序后: " );
-    for ( int i = 0; n > i; ++i )
-        printf( "%d ", arr[ i ] );
-    putchar( '\n' );
+int main( ) {
+	int *gather = init(MAXN, 1, MAXN);
+	print(gather, MAXN);
+    ordering(gather, MAXN);
+    print(gather, MAXN);
+    destroy(gather);
+    return 0;
 }
-/* -----------------------------------------------------------  */
-
